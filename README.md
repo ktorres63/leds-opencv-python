@@ -1,4 +1,4 @@
-# leds-por-Bluetooth
+# leds-opencv-python
 
 en este trabajo se utiliza un entorno virtual dentro de este se ha instalado: 
 - numpy==1.21.4
