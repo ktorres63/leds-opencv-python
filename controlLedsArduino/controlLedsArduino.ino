@@ -10,7 +10,7 @@ void setup() {
 }
 
 void loop() {
-  if (Serial.available() > 0) {
+  if (Serial.available() ) {
     option = Serial.read();
     Serial.print(option);
     if (option == 'P') {
@@ -21,5 +21,10 @@ void loop() {
       digitalWrite(led1, LOW);
       digitalWrite(led2, HIGH);
     }
+    else if(option == 'X'){
+      digitalWrite(led1, LOW);
+      digitalWrite(led2, LOW);
+    }
   }
+ 
 }
