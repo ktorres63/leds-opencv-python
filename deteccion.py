@@ -20,8 +20,21 @@ while True:
      gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
      faces = face_cascade.detectMultiScale(gray,1.1,4) # detecta rostros
      
+     #cv2.putText(img,'hola',(0,255),cv2.FONT_HERSHEY_COMPLEX,1.0,(0,255,0),2)
+     
+     texto = "Hola"
+     ubicacion = (0,225)
+     font = cv2.FONT_HERSHEY_TRIPLEX
+     tamañoLetra = 1
+     colorLetra = (221,82,196)
+     grosorLetra = 2
 
-     if faces == ():
+     #Escribir texto
+     cv2.putText(img, texto, ubicacion, font, tamañoLetra, colorLetra, grosorLetra)
+     #cv2.imshow('text',img)
+
+     print(faces)
+     if type(faces)==tuple:
           ser.write(b'P')
      else:
           ser.write(b'N')
@@ -32,7 +45,7 @@ while True:
 
      
      cv2.imshow('img',img)
-
+     #print(type(faces))
 
      k = cv2.waitKey(30) # si apretas esc se cierra
      if k == 27:
