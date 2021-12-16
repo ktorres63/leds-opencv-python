@@ -1,5 +1,6 @@
 import cv2
-import numpy as np
+
+cap= cv2.VideoCapture(0)
 
 
 def getContours(img):
@@ -18,51 +19,53 @@ def getContours(img):
             x,y,w,h = cv2.boundingRect(approx)
             
             if len(approx)==3:
-                cv2.putText(imgContours,'Triangulo',(x,y-5),1,1,(0,255,0),1)
+                cv2.putText(frame,'Triangulo',(x,y-5),1,1,(0,0,0),1)
             elif len(approx) == 4:
                 aspect_ratio = float(w)/h
                 #print("aspect ratio :",aspect_ratio)
                 if 0.5 < aspect_ratio <1.5:
-                    cv2.putText(imgContours,"cuadrado",(x,y-5),1,1,(0,255,0),1)
+                    cv2.putText(frame,"cuadrado",(x,y-5),1,1,(0,0,0),1)
                 else:
-                    cv2.putText(imgContours,"rectangulo",(x,y-5),1,1,(0,255,0),1)
+                    cv2.putText(frame,"rectangulo",(x,y-5),1,1,(0,0,0),1)
 
             elif len(approx) ==5:
-                cv2.putText(imgContours,"pentagono",(x,y-5),1,1,(0,255,0),1)
+                cv2.putText(frame,"pentagono",(x,y-5),1,1,(0,0,0),1)
             
             elif len(approx) ==6:
-                cv2.putText(imgContours,"hexagono",(x,y-5),1,1,(0,255,0),1)
+                cv2.putText(frame,"hexagono",(x,y-5),1,1,(0,0,0),1)
 
             elif len(approx) ==3:
-                cv2.putText(imgContours,"triangulo",(x,y-5),1,1,(0,255,0),1)
+                cv2.putText(frame,"triangulo",(x,y-5),1,1,(0,0,0),1)
 
             elif len(approx)>=10:
-                cv2.putText(imgContours,"circulo",(x,y-5),1,1,(0,255,0),1)
+                cv2.putText(frame,"circulo",(x,y-5),1,1,(0,0,0),1)
             
             else :
-                cv2.putText(imgContours,"???",(x,y-5),1,1,(0,255,0),1)
+                cv2.putText(frame,"???",(x,y-5),1,1,(0,0,0),1)
                 
 
-            cv2.drawContours(imgContours,[approx],-1,(110,0,255),2) #dibuja los contornos
+            #cv2.drawContours(imgContours,[approx],-1,(110,0,255),2) #dibuja los contornos
+            cv2.drawContours(frame,[cnt],-1,(110,0,255),2) #dibuja los contornos
 
 
+while True:
+    ret,frame = cap.read()
+    if ret == False: break
+    frame = cv2.flip(frame,1)
 
-img=cv2.imread('src/figGeometricas.png')
-imgContours=img.copy()
-imgGray= cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-imgBlur= cv2.GaussianBlur(imgGray,(7,7),1)
-imgCanny = cv2.Canny(imgBlur,50,50)
-imgCanny = cv2.dilate(imgCanny,None,iterations=1)
-imgCanny= cv2.erode(imgCanny,None,iterations=1)
+    imgGray= cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+    imgBlur= cv2.GaussianBlur(imgGray,(7,7),1)
+    imgCanny = cv2.Canny(imgBlur,50,50)
+    imgCanny = cv2.dilate(imgCanny,None,iterations=1)
+    imgCanny= cv2.erode(imgCanny,None,iterations=1)
 
-getContours(imgCanny)
+    getContours(imgCanny)
 
-#cv2.imshow("figuras",img)
-#cv2.imshow("figuras gris",imgGray)
-#cv2.imshow("figuras en blur",imgBlur)
-#cv2.imshow("figuras en Cnny",imgCanny)
-cv2.imshow("fig contornos",imgContours)
 
-cv2.waitKey(0)
+    cv2.imshow("fig contornos",frame)
+
+    if cv2.waitKey(1)==27: #con esc
+        break
+
 cv2.destroyAllWindows()
 
