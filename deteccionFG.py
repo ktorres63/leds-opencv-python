@@ -7,13 +7,13 @@ def getContours(img):
     
     for cnt in contours:
         area = cv2.contourArea(cnt)
-        print(area)
+        #print(area)
         if area > 500:
             #perimetro=cv2.arcLength(cnt,True) 
             epsilon=0.01*cv2.arcLength(cnt,True) 
             approx= cv2.approxPolyDP(cnt,epsilon,True)
-            print(epsilon)
-            print(len(approx))
+            #print(epsilon)
+            #print(len(approx))
             
             x,y,w,h = cv2.boundingRect(approx)
             
@@ -21,7 +21,7 @@ def getContours(img):
                 cv2.putText(imgContours,'Triangulo',(x,y-5),1,1,(0,255,0),1)
             elif len(approx) == 4:
                 aspect_ratio = float(w)/h
-                print("aspect ratio :",aspect_ratio)
+                #print("aspect ratio :",aspect_ratio)
                 if 0.5 < aspect_ratio <1.5:
                     cv2.putText(imgContours,"cuadrado",(x,y-5),1,1,(0,255,0),1)
                 else:
@@ -43,9 +43,7 @@ def getContours(img):
                 cv2.putText(imgContours,"???",(x,y-5),1,1,(0,255,0),1)
                 
 
-
-
-            cv2.drawContours(imgContours,[approx],-1,(110,0,255),2)
+            cv2.drawContours(imgContours,[approx],-1,(110,0,255),2) #dibuja los contornos
 
 
 
@@ -59,12 +57,11 @@ imgCanny= cv2.erode(imgCanny,None,iterations=1)
 
 getContours(imgCanny)
 
-cv2.imshow("figuras",img)
-cv2.imshow("figuras gris",imgGray)
-cv2.imshow("figuras en blur",imgBlur)
-cv2.imshow("figuras en Cnny",imgCanny)
+#cv2.imshow("figuras",img)
+#cv2.imshow("figuras gris",imgGray)
+#cv2.imshow("figuras en blur",imgBlur)
+#cv2.imshow("figuras en Cnny",imgCanny)
 cv2.imshow("fig contornos",imgContours)
-
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
