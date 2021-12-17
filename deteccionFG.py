@@ -1,4 +1,3 @@
-from contextlib import nullcontext
 import cv2
 import serial
 import time
